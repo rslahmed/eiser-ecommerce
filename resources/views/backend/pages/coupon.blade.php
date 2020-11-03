@@ -26,8 +26,8 @@
                                         <td>{{$row->coupon}}</td>
                                         <td>{{$row->discount}}%</td>
                                         <td class="text-right">
-                                            <button class="btn btn-primary btn-sm edit_btn" data-coupon="{{$row->coupon}}" data-discount="{{$row->discount}}" data-id="{{$row->id}}">Edit</button>
-                                            <a href="{{route('admin.coupon.destroy', $row->id)}}" class="btn btn-primary btn-sm delete_btn">Delete</a>
+                                            <button class="btn btn-secondary btn-sm edit_btn" data-coupon="{{$row->coupon}}" data-discount="{{$row->discount}}" data-id="{{$row->id}}">Edit</button>
+                                            <a href="{{route('admin.coupon.destroy', $row->id)}}" class="btn btn-danger btn-sm delete_btn">Delete</a>
                                         </td>
                                     </tr>
                                 @endforeach

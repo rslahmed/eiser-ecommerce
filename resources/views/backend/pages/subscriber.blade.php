@@ -23,7 +23,7 @@
                                         <th scope="row">{{$row->id}}</th>
                                         <td>{{$row->email}}</td>
                                         <td class="text-right">
-                                            <a href="{{route('admin.subscriber.destroy', $row->id)}}" class="btn btn-primary btn-sm delete_btn">Delete</a>
+                                            <a href="{{route('admin.subscriber.destroy', $row->id)}}" class="btn btn-danger btn-sm delete_btn">Delete</a>
                                         </td>
                                     </tr>
                                 @endforeach

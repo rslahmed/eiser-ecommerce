@@ -28,8 +28,8 @@
                                             <img src="{{asset($row->image)}}" style="height: 30px">
                                         </td>
                                         <td class="text-right">
-                                            <button class="btn btn-primary btn-sm edit_btn" data-name="{{$row->name}}" data-id="{{$row->id}}">Edit</button>
-                                            <a href="{{route('admin.brand.destroy', $row->id)}}" class="btn btn-primary btn-sm delete_btn">Delete</a>
+                                            <button class="btn btn-secondary btn-sm edit_btn" data-name="{{$row->name}}" data-id="{{$row->id}}">Edit</button>
+                                            <a href="{{route('admin.brand.destroy', $row->id)}}" class="btn btn-danger btn-sm delete_btn">Delete</a>
                                         </td>
                                     </tr>
                                 @endforeach

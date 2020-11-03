@@ -33,8 +33,8 @@
                                         <td>{{$row->brand->name ?? 'N/A'}}</td>
                                         <td class="text-right">
                                             <a href="{{route('admin.product.show', $row->id)}}" class="btn btn-primary btn-sm">View</a>
-                                            <a href="{{route('admin.product.edit', $row->id)}}" class="btn btn-primary btn-sm edit_btn">Edit</a>
-                                            <a href="{{route('admin.product.destroy', $row->id)}}" class="btn btn-primary btn-sm delete_btn">Delete</a>
+                                            <a href="{{route('admin.product.edit', $row->id)}}" class="btn btn-secondary btn-sm edit_btn">Edit</a>
+                                            <a href="{{route('admin.product.destroy', $row->id)}}" class="btn btn-danger btn-sm delete_btn">Delete</a>
                                         </td>
                                     </tr>
                                 @endforeach

@@ -24,8 +24,8 @@
                                         <th scope="row">{{$row->id}}</th>
                                         <td>{{$row->name}}</td>
                                         <td class="text-right">
-                                            <button class="btn btn-primary btn-sm edit_btn" data-name="{{$row->name}}" data-id="{{$row->id}}">Edit</button>
-                                            <a href="{{route('admin.category.destroy', $row->id)}}" class="btn btn-primary btn-sm delete_btn">Delete</a>
+                                            <button class="btn btn-secondary btn-sm edit_btn" data-name="{{$row->name}}" data-id="{{$row->id}}">Edit</button>
+                                            <a href="{{route('admin.category.destroy', $row->id)}}" class="btn btn-danger btn-sm delete_btn">Delete</a>
                                         </td>
                                     </tr>
                                 @endforeach
