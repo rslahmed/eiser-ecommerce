@@ -20,19 +20,11 @@ class CategoryController extends Controller
         ]);
 
         $create = Category::create($data);
-        $notification = [];
         if($create){
-            $notification = [
-                'message'=>'Category added',
-                'alert-type'=>'success'
-            ];
+            return back()->with('success', 'Category added');
         }else{
-            $notification = [
-                'message'=>'Something went wrong, please try again',
-                'alert-type'=>'error'
-            ];
+            return back()->with('error', 'Ops, something went wrong');
         }
-        return back()->with($notification);
     }
 
 
@@ -44,31 +36,17 @@ class CategoryController extends Controller
         $update = Category::findOrFail($id)->update($data);
         $notification = [];
         if($update){
-            $notification = [
-                'message'=>'Category updated',
-                'alert-type'=>'success'
-            ];
+            return back()->with('success', 'Category updated');
         }else{
-            $notification = [
-                'message'=>'Something went wrong, please try again',
-                'alert-type'=>'error'
-            ];
+            return back()->with('error', 'Ops, something went wrong');
         }
-        return back()->with($notification);
     }
     public function destroy($id){
         $delete = Category::findOrFail($id)->delete();
         if($delete){
-            $notification = [
-                'message'=>'Category deleted',
-                'alert-type'=>'error'
-            ];
+            return back()->with('success', 'Category deleted');
         }else{
-            $notification = [
-                'message'=>'Something went wrong, please try again',
-                'alert-type'=>'error'
-            ];
+            return back()->with('error', 'Ops, something went wrong');
         }
-        return back()->with($notification);
     }
 }

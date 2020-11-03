@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="{{asset('backend/plugins/select2/css/select2.min.css')}}">
     <link rel="stylesheet" href="{{asset('backend/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
     <link rel="stylesheet" href="{{asset('backend/plugins/bootstrap-tag-input/css/bootstrap-tagsinput.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
     <!-- iCheck for checkboxes and radio inputs -->
     <link rel="stylesheet" href="{{asset('backend/plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('backend/dist/css/adminlte.min.css')}}">
@@ -119,52 +120,36 @@
                             <p>Brands</p>
                         </a>
                     </li>
+
                     <li class="nav-item">
-                        <a href="{{route('admin.coupon')}}" class="nav-link">
+                        <a href="{{route('admin.coupon')}}" class="nav-link @if(Request::is('admin/coupon')) active @endif">
                             <i class="nav-icon fas fa-th"></i>
                             <p>Coupons</p>
                         </a>
                     </li>
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-tree"></i>
-                            <p>
-                                Product
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
+                    <li class="nav-item">
+                        <a href="{{route('admin.tags')}}" class="nav-link @if(Request::is('admin/tags')) active @endif">
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>Offer Tags</p>
                         </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{route('admin.product.add')}}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Add product</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{route('admin.product')}}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>View product</p>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
-
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-tree"></i>
-                            <p>
-                                Others
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
+                    <li class="nav-item">
+                        <a href="{{route('admin.product')}}" class="nav-link @if(Request::is('admin/product/*') || Request::is('admin/product')) active @endif">
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>Product</p>
                         </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{route('admin.subscriber')}}" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Subscribers</p>
-                                </a>
-                            </li>
-                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('admin.brand')}}" class="nav-link @if(Request::is('admin/home-setting')) active @endif">
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>Home Setting</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('admin.subscriber')}}" class="nav-link @if(Request::is('admin/subscriber')) active @endif">
+                            <i class="nav-icon fas fa-th"></i>
+                            <p>Subscribers</p>
+                        </a>
                     </li>
                 </ul>
             </nav>
@@ -226,30 +211,22 @@
 <script src="{{asset('backend/plugins/summernote/summernote-bs4.min.js')}}"></script>
 <script src="{{asset('backend/plugins/select2/js/select2.full.min.js')}}"></script>
 <script src="{{asset('backend/plugins/bootstrap-tag-input/js/bootstrap-tagsinput.min.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 <script>
 
-    @if(Session::has('message'))
-    var type="{{Session::get('alert-type','info')}}"
-    switch(type){
-        case 'info':
-            toastr.info("{{ Session::get('message') }}");
-            break;
-        case 'success':
-            toastr.success("{{ Session::get('message') }}");
-            break;
-        case 'warning':
-            toastr.warning("{{ Session::get('message') }}");
-            break;
-        case 'error':
-            toastr.error("{{ Session::get('message') }}");
-            break;
-    }
+    // notification push
+    @if($errors->any())
+        @foreach ($errors->all() as $error)
+            toastr["error"]("{{ $error }}")
+        @endforeach
     @endif
 
-    @if($errors->any())
-    @foreach ($errors->all() as $error)
-    toastr.error('{{ $error }}');
-    @endforeach
+    @if(Session::has('success'))
+        toastr["success"]("{{ Session::get('success') }}")
+    @endif
+
+    @if(Session::has('error'))
+        toastr["error"]("{{ Session::get('error') }}")
     @endif
 
     $(document).on("click", "#delete", function(e){

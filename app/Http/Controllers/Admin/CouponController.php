@@ -22,15 +22,9 @@ class CouponController extends Controller
 
         $create = Coupon::create($data);
         if($create){
-            $notification = [
-                'message'=>'Coupon added',
-                'alert-type'=>'success'
-            ];
+            return back()->with('success', 'Coupon added');
         }else{
-            $notification = [
-                'message'=>'Something went wrong, please try again',
-                'alert-type'=>'error'
-            ];
+            return back()->with('error', 'Ops, something went wrong');
         }
         return back()->with($notification);
     }
@@ -43,15 +37,9 @@ class CouponController extends Controller
 
         $create = Coupon::findOrFail($id)->update($data);
         if($create){
-            $notification = [
-                'message'=>'Coupon updated',
-                'alert-type'=>'success'
-            ];
+            return back()->with('success', 'Coupon updated');
         }else{
-            $notification = [
-                'message'=>'Something went wrong, please try again',
-                'alert-type'=>'error'
-            ];
+            return back()->with('error', 'Ops, something went wrong');
         }
         return back()->with($notification);
     }
@@ -60,16 +48,9 @@ class CouponController extends Controller
 
         $delete = Coupon::findOrFail($id)->delete();
         if($delete){
-            $notification = [
-                'message'=>'Coupon deleted',
-                'alert-type'=>'success'
-            ];
+            return back()->with('success', 'Coupon deleted');
         }else{
-            $notification = [
-                'message'=>'Something went wrong, please try again',
-                'alert-type'=>'error'
-            ];
+            return back()->with('error', 'Ops, something went wrong');
         }
-        return back()->with($notification);
     }
 }

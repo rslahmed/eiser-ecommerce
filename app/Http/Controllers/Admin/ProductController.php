@@ -6,6 +6,7 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\Tags;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -22,17 +23,23 @@ class ProductController extends Controller
         return view('backend.product.product_add',[
             'categories' => Category::all(),
             'brands' => Brand::all(),
+            'tags' => Tags::all()
         ]);
     }
 
     function show($id){
         $product = Product::findOrFail($id);
-        return view('backend.product.product_view', compact('product'));
+        $tags = null;
+        if(!empty($product->tag_id)){
+            $tags = Tags::whereIn('id', json_decode($product->tag_id))->get();
+        }
+        return view('backend.product.product_view', compact('product', 'tags'));
     }
 
     function store(){
         //validation
         $data = $this->productValidate();
+        $data['tag_id'] = json_encode(request()->tag_id);
 
         //primary image
         $primaryImage = request()->image_one;
@@ -74,17 +81,9 @@ class ProductController extends Controller
 
         $create = Product::create($data);
         if($create){
-            $notification = [
-                'message'=>'Product added',
-                'alert-type'=>'success'
-            ];
-            return redirect(route('admin.product.show', $create->id))->with($notification);
+            return redirect(route('admin.product.show', $create->id))->with('success', 'Product Added');
         }else{
-            $notification = [
-                'message'=>'Ops, something went wrong',
-                'alert-type'=>'error'
-            ];
-            return back()->with($notification);
+            return back()->with('error', 'Ops, something went wrong');
         }
 
     }
@@ -92,9 +91,10 @@ class ProductController extends Controller
     function edit($id){
         $categories = Category::all();
         $brands = Brand::all();
+        $tags = Tags::all();
         $editProduct = Product::findOrFail($id);
 
-        return view('backend.product.product_add',compact('categories','brands','editProduct'));
+        return view('backend.product.product_add',compact('categories','brands','editProduct', 'tags'));
     }
 
     function update($id){
@@ -147,17 +147,9 @@ class ProductController extends Controller
 
         $create = Product::where('id', $id)->update($data);
         if($create){
-            $notification = [
-                'message'=>'Product Updated',
-                'alert-type'=>'success'
-            ];
-            return redirect(route('admin.product.show', $id))->with($notification);
+            return redirect(route('admin.product.show', $id))->with('success', 'Product updated');
         }else{
-            $notification = [
-                'message'=>'Ops, something went wrong',
-                'alert-type'=>'error'
-            ];
-            return back()->with($notification);
+            return back()->with('error', 'Ops, something went wrong');
         }
 
     }
@@ -179,17 +171,10 @@ class ProductController extends Controller
 
         $delete = Product::where('id', $id)->delete();
         if($delete){
-            $notification = [
-                'message'=>'Product deleted',
-                'alert-type'=>'success'
-            ];
+            return back()->with('success', 'Product deleted');
         }else{
-            $notification = [
-                'message'=>'Something went wrong, please try again',
-                'alert-type'=>'error'
-            ];
+            return back()->with('error', 'Something went wrong, please try again');
         }
-        return back()->with($notification);
 
     }
 
@@ -220,7 +205,7 @@ class ProductController extends Controller
            'selling_price' => 'required|integer',
            'discount_price' => 'nullable|string',
            'product_details' => 'required|string',
-           'tag_id' => 'nullable|string',
+           'tag_id' => 'nullable|array',
            'video_link' => 'nullable|string',
            'image_one' => 'image',
            'image_two' => 'nullable|image',

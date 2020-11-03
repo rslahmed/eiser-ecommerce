@@ -103,3 +103,8 @@ img.prod_view_img{
 .banner_product_image img {
     max-width: 400px;
 }
+
+.multiselect button.btn{
+    background-color: transparent;
+    border: 1px solid #ced4da;
+}

@@ -1,0 +1,22 @@
+.product-img img {
+    height: 280px;
+    object-fit: contain;
+}
+
+.text-muted{
+    text-decoration: line-through;
+}
+
+img{
+    width: 100%;
+}
+
+.sproduct_small-image img{
+    height: 60px;
+    object-fit: contain;
+}
+
+.sproduct_big-image img{
+    height: 580px;
+    object-fit: contain;
+}

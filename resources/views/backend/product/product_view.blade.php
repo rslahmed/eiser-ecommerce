@@ -71,8 +71,19 @@
                                 <td>{{$product->video_link ?? 'N/A'}}</td>
                             </tr>
                             <tr>
-                                <th class="w-25">Tags:</th>
-                                <td>N/A</td>
+                                <th class="w-25">Offer Tags:</th>
+                                <td>
+                                    @if(!empty($tags) && $tags != null)
+                                        @foreach($tags as $tag)
+                                            {{$tag->tag_name}}
+                                            @if(!$loop->last)
+                                                ,
+                                            @endif
+                                        @endforeach
+                                    @else
+                                        N/A
+                                    @endif
+                                </td>
                             </tr>
 
                         </table>

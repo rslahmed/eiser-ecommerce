@@ -3,7 +3,7 @@
 @section('admin_content')
     <div class="container">
         <div class="row">
-            <div class="col-md-12 m-auto">
+            <div class="col-md-10 m-auto">
                 <div class="card">
                     <div class="card-header d-flex">
                         <h4 class="m-0">@if(!empty($editProduct)) Edit @else Add @endif Product</h4>
@@ -12,29 +12,37 @@
                         <form action="@if(!empty($editProduct))  {{route('admin.product.update', $editProduct->id)}} @else  {{route('admin.product.store')}} @endif" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="product_name">Product name: <span class="text-danger">*</span></label>
                                         <input name="product_name" type="text" class="form-control" id="product_name" value="{{ old('product_name') ?? $editProduct->product_name ?? '' }}">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="product_code">Product code:</label>
-                                        <input name="product_code" type="text" class="form-control" id="product_code" value="{{ old('product_code') ?? $editProduct->product_code ?? ''  }}">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="product_quantity">Quantity: <span class="text-danger">*</span></label>
-                                        <input name="product_quantity" type="number" class="form-control" id="product_quantity" value="{{ old('product_quantity') ?? $editProduct->product_quantity ?? '' }}">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="category_id">Category: </label>
+                                        <label for="product_quantity">Quantity: <span class="text-danger">*</span></label>
+                                        <input name="product_quantity" type="number" class="form-control" id="product_quantity" value="{{ old('product_quantity') ?? $editProduct->product_quantity ?? '' }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="selling_price">Selling price: <span class="text-danger">*</span></label>
+                                        <input name="selling_price" type="number" class="form-control" id="selling_price" placeholder="$" value="{{ old('selling_price') ?? $editProduct->selling_price ?? ''}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="discount_price">Discount price: </label>
+                                        <input name="discount_price" type="number" class="form-control" id="discount_price" placeholder="$" value="{{ old('discount_price') ?? $editProduct->discount_price ?? ''}}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="category_id">Category: <span class="text-danger">*</span></label>
                                         <select class="form-control select2" name="category_id" id="category_id" style="width: 100%;">
                                             <option value="" selected="selected">Select category</option>
                                             @foreach($categories as $row)
@@ -54,11 +62,19 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="video_link">Video link: </label>
-                                        <input name="video_link" type="text" class="form-control" id="video_link" placeholder="https://youtube.com" value="{{ old('video_link') ?? $editProduct->video_link ?? '' }}">
-                                    </div>
+
+                                <div class="col-md-4 multiselect">
+                                    <label for="tag">Select Tags:</label>
+                                    <select class="form-control" id="tag" name="tag_id[]" multiple>
+                                        @foreach($tags as $row)
+                                            @php
+                                                if(!empty($editProduct) && json_decode($editProduct->tag_id) != null){
+                                                    $prevTag = json_decode($editProduct->tag_id) ;
+                                                }
+                                            @endphp
+                                            <option value="{{$row->id}}" @if(in_array($row->id, (old('tag_id') ?? $prevTag ?? []) ))) selected @endif>{{$row->tag_name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
 
                             </div>
@@ -75,16 +91,10 @@
                                         <input name="product_color" type="text" class="form-control tags_input" data-role="tagsinput" id="product_color" value="{{old('product_color') ?? $editProduct->product_color ?? ''}}">
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="selling_price">Selling price: <span class="text-danger">*</span></label>
-                                        <input name="selling_price" type="number" class="form-control" id="selling_price" placeholder="$" value="{{ old('selling_price') ?? $editProduct->selling_price ?? ''}}">
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label for="discount_price">Discount price: </label>
-                                        <input name="discount_price" type="number" class="form-control" id="discount_price" placeholder="$" value="{{ old('discount_price') ?? $editProduct->discount_price ?? ''}}">
+                                        <label for="video_link">Video link: </label>
+                                        <input name="video_link" type="text" class="form-control" id="video_link" placeholder="https://youtube.com" value="{{ old('video_link') ?? $editProduct->video_link ?? '' }}">
                                     </div>
                                 </div>
                             </div>
@@ -226,5 +236,8 @@
             $('#prev_'+img).hide();
             $('#'+img).val('');
         }
+
+        // tag
+        $('#tag').selectpicker();
     </script>
 @endsection

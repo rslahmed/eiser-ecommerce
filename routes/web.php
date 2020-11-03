@@ -2,9 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [\App\Http\Controllers\HomeController::class, 'index']);
 
 
 //Admin auth
@@ -28,6 +26,12 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'IsAdmin']], functio
     Route::post('/coupon/store/', [\App\Http\Controllers\Admin\CouponController::class, 'store'])->name('admin.coupon.store');
     Route::post('/coupon/update/{id}', [\App\Http\Controllers\Admin\CouponController::class, 'update'])->name('admin.coupon.update');
     Route::get('/coupon/destroy/{id}', [\App\Http\Controllers\Admin\CouponController::class, 'destroy'])->name('admin.coupon.destroy');
+
+//coupon
+    Route::get('/tags/', [\App\Http\Controllers\Admin\TagController::class, 'index'])->name('admin.tags');
+    Route::post('/tags/store/', [\App\Http\Controllers\Admin\TagController::class, 'store'])->name('admin.tags.store');
+    Route::post('/tags/update/{id}', [\App\Http\Controllers\Admin\TagController::class, 'update'])->name('admin.tags.update');
+    Route::get('/tags/destroy/{id}', [\App\Http\Controllers\Admin\TagController::class, 'destroy'])->name('admin.tags.destroy');
 
 //Subscriber
     Route::get('/subscriber/', [\App\Http\Controllers\Admin\SubscriberController::class, 'index'])->name('admin.subscriber');

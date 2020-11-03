@@ -27,17 +27,10 @@ class BrandController extends Controller
 
         $create = Brand::create($data);
         if($create){
-            $notification = [
-                'message'=>'Brand added',
-                'alert-type'=>'success'
-            ];
+            return back()->with('success', 'Brand added');
         }else{
-            $notification = [
-                'message'=>'Something went wrong, please try again',
-                'alert-type'=>'error'
-            ];
+            return back()->with('error', 'Ops, something went wrong');
         }
-        return back()->with($notification);
     }
 
 
@@ -63,17 +56,10 @@ class BrandController extends Controller
 
         $update = Brand::findOrFail($id)->update($data);
         if($update){
-            $notification = [
-                'message'=>'Brand updated',
-                'alert-type'=>'success'
-            ];
+            return back()->with('success', 'Brand updated');
         }else{
-            $notification = [
-                'message'=>'Something went wrong, please try again',
-                'alert-type'=>'error'
-            ];
+            return back()->with('error', 'Ops, something went wrong');
         }
-        return back()->with($notification);
     }
 
     public function destroy($id){
@@ -81,17 +67,10 @@ class BrandController extends Controller
         $delete = Brand::where('id',$id)->delete();
         if($delete){
             @unlink(public_path().'/'.$imgpath);
-            $notification = [
-                'message'=>'Brand deleted',
-                'alert-type'=>'success'
-            ];
+            return back()->with('success', 'Brand deleted');
         }else{
-            $notification = [
-                'message'=>'Something went wrong, please try again',
-                'alert-type'=>'error'
-            ];
+            return back()->with('error', 'Ops, something went wrong');
         }
-        return back()->with($notification);
 
     }
 }

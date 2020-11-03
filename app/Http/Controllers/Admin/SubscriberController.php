@@ -25,33 +25,19 @@ class SubscriberController extends Controller
 
         $create = subscriber::create($data);
         if($create){
-            $notification = [
-                'message'=>'Thank you',
-                'alert-type'=>'success'
-            ];
+            return back()->with('success', 'Thank you');
         }else{
-            $notification = [
-                'message'=>'Something went wrong, please try again',
-                'alert-type'=>'error'
-            ];
+            return back()->with('error', 'Ops, something went wrong');
         }
-        return back()->with($notification);
     }
 
     function destroy($id){
         $delete = subscriber::findOrFail($id)->delete();
         if($delete){
-            $notification = [
-                'message'=>'Subscriber deleted',
-                'alert-type'=>'success'
-            ];
+            return back()->with('success', 'Subscriber deleted');
         }else{
-            $notification = [
-                'message'=>'Something went wrong, please try again',
-                'alert-type'=>'error'
-            ];
+            return back()->with('success', 'Coupon deleted');
         }
-        return back()->with($notification);
     }
 
 }
