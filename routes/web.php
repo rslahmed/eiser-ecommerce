@@ -9,6 +9,7 @@ Route::get('/', [\App\Http\Controllers\HomeController::class, 'index']);
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'IsAdmin']], function(){
 //home
     Route::get('/dashboard',  [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.home');
+    Route::get('/home-setting',  [\App\Http\Controllers\Admin\DashboardController::class, 'homeSetting'])->name('admin.homeSetting');
 //    category
     Route::get('/category', [\App\Http\Controllers\Admin\CategoryController::class, 'index'])->name('admin.category');
     Route::get('/category/destroy/{id}', [\App\Http\Controllers\Admin\CategoryController::class, 'destroy'])->name('admin.category.destroy');
@@ -48,6 +49,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'IsAdmin']], functio
 
 //    API
     Route::get('/product/remove_product_image/', [\App\Http\Controllers\Admin\ProductController::class, 'removeImage']);
+    Route::get('/change_tag_status', [\App\Http\Controllers\Admin\TagController::class, 'changeStatus']);
 });
 
 

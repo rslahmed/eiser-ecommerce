@@ -19,15 +19,15 @@
     </section>
     <!--================End Home Banner Area =================-->
 
-    {{--featured product area--}}
-    @if(!empty($products))
-    <section class="feature_product_area section_gap_bottom_custom">
+    {{--product area--}}
+    @if(!empty($products) && !empty($tags))
+        @foreach($tags as $tag)
+        <section class="feature_product_area section_gap_bottom_custom">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-12">
                     <div class="main_title">
-                        <h2><span>Featured product</span></h2>
-                        <p>Bring called seed first of third give itself now ment</p>
+                        <h2><span>{{$tag->tag_name}}</span></h2>
                     </div>
                 </div>
             </div>
@@ -35,6 +35,7 @@
             <div class="row featured_slider owl-carousel">
 
                 @foreach($products as $row)
+                    @if(in_array($tag->id,json_decode($row->tag_id)))
                     <div class="col-lg-12">
                         <div class="single-product">
                             <div class="product-img">
@@ -66,11 +67,13 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                 @endforeach
 
             </div>
         </div>
     </section>
+        @endforeach
     @endif
 
     {{--banner section--}}
@@ -88,128 +91,4 @@
             </div>
         </div>
     </section>
-
-    {{--new prodcut area--}}
-    <section class="new_product_area section_gap_top section_gap_bottom_custom">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-12">
-                    <div class="main_title">
-                        <h2><span>new products</span></h2>
-                        <p>Bring called seed first of third give itself now ment</p>
-                    </div>
-                </div>
-            </div>
-
-            {{--        collection of year--}}
-            <div class="row ">
-                @if(!empty($products))
-                <div class="col-lg-6 collection_oy owl-carousel">
-                    @foreach($products as $row)
-                    <div class="new_product">
-                        <h5 class="text-uppercase">collection of 2019</h5>
-                        <h3 class="text-uppercase">{{$row->product_name}}</h3>
-                        <div class="product-img">
-                            <img class="img-fluid" src="{{asset($row->image_one)}}" style="height: 300px; object-fit: contain">
-                        </div>
-                        <h4>{{$row->discount_price ?? $row->selling_price}}</h4>
-                        <a href="" class="main_btn">View product</a>
-                    </div>
-                    @endforeach
-                </div>
-                @endif
-
-                @if(!empty($products))
-                <div class="col-lg-6 mt-5 mt-lg-0">
-                    <div class="row">
-                            @foreach($products as $row)
-                            <div class="col-md-6">
-                                <div class="single-product">
-                                    <div class="product-img">
-                                        <img class="img-fluid w-100" style="height: 280px; object-fit: contain" src="{{asset($row->image_one)}}" alt="">
-                                        <div class="p_icon">
-                                            <a href="">
-                                                <i class="ti-eye"></i>
-                                            </a>
-                                            <a href="#">
-                                                <i class="ti-heart"></i>
-                                            </a>
-                                            <a href="#">
-                                                <i class="ti-shopping-cart"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="product-btm">
-                                        <a href="#" class="d-block">
-                                            <h4>{{$row->product_name}}</h4>
-                                        </a>
-                                        <div class="mt-3">
-                                            @if(!empty($row->selling_price))
-                                                <span class="mr-4">${{$row->discount_price}}</span>
-                                                <del>${{$row->selling_price}}</del>
-                                            @else
-                                                <span class="mr-4">${{$row->selling_price}}</span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            @endforeach
-                    </div>
-                </div>
-                @endif
-            </div>
-        </div>
-    </section>
-
-    {{--    hot deal section--}}
-    @if(!empty($products))
-    <section class="inspired_product_area section_gap_bottom_custom">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-12">
-                    <div class="main_title">
-                        <h2><span>Hot deal</span></h2>
-                        <p>Bring called seed first of third give itself now ment</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row hot_deal owl-carousel">
-                    @foreach($products as $row)
-                    <div class="col-lg-12">
-                        <div class="single-product">
-                            <div class="product-img">
-                                <img class="img-fluid w-100" src="{{asset($row->image_one)}}" alt="">
-                                <div class="p_icon">
-                                    <a href="">
-                                        <i class="ti-eye"></i>
-                                    </a>
-                                    <a href="#">
-                                        <i class="ti-heart"></i>
-                                    </a>
-                                    <a href="#">
-                                        <i class="ti-shopping-cart"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="product-btm">
-                                <a href="#" class="d-block">
-                                    <h4>{{$row->product_name}}</h4>
-                                </a>
-                                <div class="mt-3">
-                                    @if(!empty($row->selling_price))
-                                        <span class="mr-4">${{$row->discount_price}}</span>
-                                        <del>${{$row->selling_price}}</del>
-                                    @else
-                                        <span class="mr-4">${{$row->selling_price}}</span>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    @endforeach
-            </div>
-        </div>
-    </section>
-    @endif
 @endsection

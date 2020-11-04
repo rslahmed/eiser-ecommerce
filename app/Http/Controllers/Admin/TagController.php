@@ -55,4 +55,13 @@ class TagController extends Controller
             return back()->with('error', 'Ops, something went wrong');
         }
     }
+
+    function changeStatus(Request $request){
+        $update = Tags::findOrFail($request->id)->update([
+            'status' => $request->status
+        ]);
+        if($update){
+            return response('ok');
+        }
+    }
 }

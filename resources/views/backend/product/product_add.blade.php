@@ -44,7 +44,7 @@
                                     <div class="form-group">
                                         <label for="category_id">Category: <span class="text-danger">*</span></label>
                                         <select class="form-control select2" name="category_id" id="category_id" style="width: 100%;">
-                                            <option value="" selected="selected">Select category</option>
+                                            <option value="" selected="selected" hidden>Select category</option>
                                             @foreach($categories as $row)
                                                 <option value="{{$row->id}}" @if(old('category_id') == $row->id || ((!empty($editProduct)) && $editProduct->category_id == $row->id )) selected @endif >{{$row->name}}</option>
                                             @endforeach
