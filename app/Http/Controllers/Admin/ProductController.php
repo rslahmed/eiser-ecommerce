@@ -19,6 +19,16 @@ class ProductController extends Controller
         ]);
     }
 
+    function view($slug){
+        $product = Product::where('slug', $slug)->first();
+        if($product){
+            return view('frontend.product.view_product', compact('product'));
+        }else{
+            $error = 'Product not found';
+            return view('frontend.404', compact('error'));
+        }
+    }
+
     function add(){
         return view('backend.product.product_add',[
             'categories' => Category::all(),

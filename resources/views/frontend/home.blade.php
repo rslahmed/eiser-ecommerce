@@ -3,7 +3,7 @@
 @section('content')
 
     <!--================Home Banner Area =================-->
-    <section class="home_banner_area mb-40">
+    <section class="home_banner_area mb-80">
         <div class="banner_inner d-flex align-items-center">
             <div class="container">
                 <div class="banner_content row">
@@ -39,9 +39,11 @@
                     <div class="col-lg-12">
                         <div class="single-product">
                             <div class="product-img">
-                                <img class="img-fluid w-100" src="{{asset($row->image_one)}}" alt="">
+                                <a href="{{route('product.view', $row->slug)}}">
+                                    <img class="img-fluid w-100" src="{{asset($row->image_one)}}" alt="">
+                                </a>
                                 <div class="p_icon">
-                                    <a href="">
+                                    <a href="{{route('product.view', $row->slug)}}">
                                         <i class="ti-eye"></i>
                                     </a>
                                     <a href="#">

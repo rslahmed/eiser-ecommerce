@@ -2,8 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [\App\Http\Controllers\HomeController::class, 'index']);
-
 
 //Admin auth
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'IsAdmin']], function(){
@@ -56,7 +54,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'IsAdmin']], functio
 
 //auth user
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/home',[\App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/user/view',[\App\Http\Controllers\UserControlelr::class, 'index'])->name('user.view');
     Route::get('/user/change-password',[\App\Http\Controllers\UserControlelr::class, 'editPassword'])->name('user.changePassword');
     Route::post('/user/change-password',[\App\Http\Controllers\UserControlelr::class, 'editPassword'])->name('user.changePassword');
@@ -64,4 +61,9 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 //normal user
-
+//home page
+Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// subscribe
+Route::post('/subscriber/', [\App\Http\Controllers\Admin\SubscriberController::class, 'store'])->name('subscriber.store');
+// product view
+Route::get('/product/{slug}', [\App\Http\Controllers\Admin\ProductController::class, 'view'])->name('product.view');
