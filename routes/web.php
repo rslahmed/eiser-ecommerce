@@ -55,8 +55,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'IsAdmin']], functio
 //auth user
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/user/view',[\App\Http\Controllers\UserControlelr::class, 'index'])->name('user.view');
-    Route::get('/user/change-password',[\App\Http\Controllers\UserControlelr::class, 'editPassword'])->name('user.changePassword');
-    Route::post('/user/change-password',[\App\Http\Controllers\UserControlelr::class, 'editPassword'])->name('user.changePassword');
+    Route::get('/user/view',[\App\Http\Controllers\UserControlelr::class, 'profile'])->name('user.profile');
+    Route::get('/user/change-password',[\App\Http\Controllers\UserControlelr::class, 'editPassword'])->name('user.password');
+    Route::post('/user/change-password',[\App\Http\Controllers\UserControlelr::class, 'updatePassword'])->name('user.password');
 });
 
 

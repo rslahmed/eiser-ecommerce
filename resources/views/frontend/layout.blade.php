@@ -158,7 +158,7 @@
 
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                         @auth()
-                                            <a class="dropdown-item" href="#"><i class="far fa-id-badge mr-2"></i> Profile</a>
+                                            <a class="dropdown-item" href="{{route('user.profile')}}"><i class="far fa-id-badge mr-2"></i> Profile</a>
                                             <a class="dropdown-item" href="{{ route('logout') }}"
                                                onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

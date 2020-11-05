@@ -2,6 +2,11 @@
 
 @section('content')
     <p class="login-card-description">Reset password</p>
+    @if(Session::has('status'))
+        <div class="alert alert-danger">
+            {{ Session::get('status')}}
+        </div>
+    @endif
     <form action="{{ route('password.update') }}" method="post">
         @csrf
 
