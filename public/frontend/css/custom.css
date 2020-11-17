@@ -24,3 +24,34 @@ img{
 .mb-80{
     margin-bottom: 80px;
 }
+
+input.appearance-none {
+    -webkit-appearance: none !important;
+    -moz-appearance:    none !important;
+    appearance:         none !important;
+}
+
+.header_area .navbar .icons.carts-icon{
+    font-size: 17px;
+}
+
+span.cart-tag {
+    position: absolute;
+    top: 18px;
+    right: 3px;
+    background-color: #71cd14;
+    height: 15px;
+    width: 15px;
+    font-size: 12px;
+    line-height: 16px;
+    border-radius: 50%;
+    font-weight: 500;
+    color: #fff;
+    white-space: nowrap;
+}
+
+img.single_cart_img{
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+}

@@ -140,8 +140,9 @@
                                 </li>
 
                                 <li class="nav-item">
-                                    <a href="#" class="icons">
+                                    <a href="{{route('carts')}}" class="icons carts-icon position-relative">
                                         <i class="ti-shopping-cart"></i>
+                                        <span class="cart-tag" id="cartCount">@auth {{auth()->user()->myCartsCount()}} @else 0 @endif</span>
                                     </a>
                                 </li>
 

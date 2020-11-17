@@ -40,4 +40,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    function myCartsCount(){
+        $cart = Cart::where('user_id', auth()->id())->get()->count();
+        return ($cart > 9) ? '9+' : $cart;
+    }
 }

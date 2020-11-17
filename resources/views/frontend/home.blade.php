@@ -52,10 +52,10 @@
                                             <a href="{{route('product.view', $row->slug)}}">
                                                 <i class="ti-eye"></i>
                                             </a>
-                                            <a href="#">
+                                            <a href="javascript:void(0)">
                                                 <i class="ti-heart"></i>
                                             </a>
-                                            <a href="#">
+                                            <a href="javascript:void(0)" class="add_to_cart" data-id="{{$row->id}}">
                                                 <i class="ti-shopping-cart"></i>
                                             </a>
                                         </div>
@@ -151,4 +151,27 @@
             </div>
         </div>
     </section>
+@endsection
+
+@section('script')
+    <script !src="">
+        // add to cart
+        $('.add_to_cart').click(function () {
+            @auth
+            let id = $(this).attr('data-id')
+            $.post("{{route('cart.store')}}",
+                {
+                    "_token": "{{ csrf_token() }}",
+                    product_id: id,
+                    quantity: 1
+                },
+                function(data, status){
+                    $('#cartCount').text(data)
+                    alert('Product added to your cart')
+                });
+            @else
+                return location = '{{route('login')}}'
+            @endauth
+        })
+    </script>
 @endsection

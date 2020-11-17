@@ -68,3 +68,8 @@ Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('h
 Route::post('/subscriber/', [\App\Http\Controllers\Admin\SubscriberController::class, 'store'])->name('subscriber.store');
 // product view
 Route::get('/product/{slug}', [\App\Http\Controllers\Admin\ProductController::class, 'view'])->name('product.view');
+
+//Cart
+Route::post('/cart/store', [\App\Http\Controllers\CartController::class, 'store'])->name('cart.store');
+Route::get('/my-carts', [\App\Http\Controllers\CartController::class, 'index'])->name('carts');
+Route::post('/cart/destroy/{id}', [\App\Http\Controllers\CartController::class, 'destroy'])->name('cart.destroy');

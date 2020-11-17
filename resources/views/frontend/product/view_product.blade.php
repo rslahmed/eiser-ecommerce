@@ -77,23 +77,20 @@
                                 <a href="#"> <span>Availibility</span> : @if($product->product_quantity > 0 && $product->product_quantity > 10) In Stock @elseif($product->product_quantity <= 10 && $product->product_quantity > 0) Almost sold out! @else Out of stock @endif</a>
                             </li>
                         </ul>
-                        <p>{{$product->product_description}}</p>
+                        <div class="my-3">{!! $product->product_details !!}</div>
                         <div class="product_count">
                             <label for="qty">Quantity:</label>
-                            <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:" class="input-text qty">
-                            <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;" class="increase items-count" type="button">
+                            <input type="number" name="quantity" id="quantity" maxlength="12" value="1" title="Quantity:" class="input-text appearance-none qty">
+                            <button onclick="var result = document.getElementById('quantity'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;" class="increase items-count" type="button">
                                 <i class="lnr lnr-chevron-up"></i>
                             </button>
-                            <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;" class="reduced items-count" type="button">
+                            <button onclick="var result = document.getElementById('quantity'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 1 ) result.value--;return false;" class="reduced items-count" type="button">
                                 <i class="lnr lnr-chevron-down"></i>
                             </button>
                         </div>
                         <div class="card_area">
-                            <a class="main_btn" href="{{url('/addto-card/'.$product->id)}}">Add to Cart</a>
-                            <a class="icon_btn" href="#">
-                                <i class="lnr lnr lnr-diamond"></i>
-                            </a>
-                            <a class="icon_btn" href="#">
+                            <a class="main_btn" id="addToCart" href="javascript:void(0)">Add to Cart</a>
+                            <a class="icon_btn" href="javascript:void(0)">
                                 <i class="lnr lnr lnr-heart"></i>
                             </a>
                         </div>
@@ -511,4 +508,26 @@
         </div>
     </section>
     <!--================End Product Description Area =================-->
+@endsection
+
+@section('script')
+    <script !src="">
+        $('#addToCart').click(function(){
+            @auth
+            let quantity = parseInt($('#quantity').val());
+            $.post("{{route('cart.store')}}",
+                {
+                    "_token": "{{ csrf_token() }}",
+                    product_id: '{{$product->id}}',
+                    quantity: quantity
+                },
+                function(data, status){
+                    $('#cartCount').text(data)
+                    alert('Product added to your cart')
+                });
+            @else
+            return location = '{{route('login')}}'
+            @endauth
+        })
+    </script>
 @endsection
