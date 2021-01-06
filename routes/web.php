@@ -51,13 +51,20 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'IsAdmin']], functio
 });
 
 
-
 //auth user
 Route::group(['middleware' => ['auth']], function () {
+    //user home & profile
     Route::get('/user/view',[\App\Http\Controllers\UserControlelr::class, 'index'])->name('user.view');
     Route::get('/user/view',[\App\Http\Controllers\UserControlelr::class, 'profile'])->name('user.profile');
     Route::get('/user/change-password',[\App\Http\Controllers\UserControlelr::class, 'editPassword'])->name('user.password');
     Route::post('/user/change-password',[\App\Http\Controllers\UserControlelr::class, 'updatePassword'])->name('user.password');
+
+    //Cart
+    Route::get('/my-carts', [\App\Http\Controllers\CartController::class, 'index'])->name('carts');
+    Route::post('/cart/store', [\App\Http\Controllers\CartController::class, 'store'])->name('cart.store');
+
+    // Checkout
+    Route::get('/checkout', [\App\Http\Controllers\CheckoutController::class, 'index'])->name('checkout');
 });
 
 
@@ -69,7 +76,3 @@ Route::post('/subscriber/', [\App\Http\Controllers\Admin\SubscriberController::c
 // product view
 Route::get('/product/{slug}', [\App\Http\Controllers\Admin\ProductController::class, 'view'])->name('product.view');
 
-//Cart
-Route::post('/cart/store', [\App\Http\Controllers\CartController::class, 'store'])->name('cart.store');
-Route::get('/my-carts', [\App\Http\Controllers\CartController::class, 'index'])->name('carts');
-Route::post('/cart/destroy/{id}', [\App\Http\Controllers\CartController::class, 'destroy'])->name('cart.destroy');

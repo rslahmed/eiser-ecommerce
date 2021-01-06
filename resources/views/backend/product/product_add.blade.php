@@ -176,7 +176,7 @@
     <script>
         $(document).ready(function() {
             // summernote
-            $('.summernote').summernote('code', '{!! old('product_details') ?? $editProduct->product_details ?? '' !!} ');
+            $('.summernote').summernote('code', `{!! old('product_details') ?? $editProduct->product_details ?? '' !!} `);
         });
 
         // bootstrap tag input
@@ -208,10 +208,8 @@
         function showPrevImg(img){
             $('#rmv_'+img).remove();
             $('#prev_'+img).removeClass('d-block');
-
             $('#prev_'+img).show();
             $('#cncl_'+img).css('display', 'flex');
-
         }
 
 

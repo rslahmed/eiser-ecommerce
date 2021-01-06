@@ -103,7 +103,7 @@ class ProductController extends Controller
         $brands = Brand::all();
         $tags = Tags::all();
         $editProduct = Product::findOrFail($id);
-
+//        return $editProduct;
         return view('backend.product.product_add',compact('categories','brands','editProduct', 'tags'));
     }
 

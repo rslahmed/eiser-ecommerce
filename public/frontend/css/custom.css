@@ -55,3 +55,9 @@ img.single_cart_img{
     height: 80px;
     object-fit: cover;
 }
+
+.order_box .list li a .start{
+    width: 160px;
+    float: left;
+    overflow: hidden;
+}

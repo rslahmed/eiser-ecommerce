@@ -10,15 +10,7 @@ class CartController extends Controller
 {
 
     function index(){
-        $carts = Cart::where('user_id', auth()->id())->get();
-        $subTotal = 0;
-        foreach ($carts as $cart){
-            $subprice = $cart->product->discount_price ?? $cart->product->selling_price;
-            $price = $subprice * $cart->quantity;
-            $subTotal += $price;
-        }
-
-        return view('frontend.product.my_carts', compact('carts', 'subTotal'));
+        return view('frontend.product.my_carts');
     }
 
     function store(Request $request){
