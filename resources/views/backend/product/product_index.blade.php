@@ -2,7 +2,7 @@
 @section('admin_content')
     <div class="container">
         <div class="row">
-            <div class="col-md-10 m-auto">
+            <div class="col-md-12 m-auto">
                 <div class="card">
                     <div class="card-header d-flex">
                         <h4 class="m-0">All Products</h4>

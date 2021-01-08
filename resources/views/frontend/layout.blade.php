@@ -68,7 +68,7 @@
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light w-100">
                 <!-- Brand and toggle get grouped for better mobile display -->
-                <a class="navbar-brand logo_h" href="index.html">
+                <a class="navbar-brand logo_h" href="{{route('home')}}">
                     <img src="{{asset('frontend/img/logo.png')}}" alt="" />
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -161,20 +161,16 @@
 
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                         @auth()
-                                            <a class="dropdown-item" href="{{route('user.profile')}}"><i class="far fa-id-badge mr-2"></i> Profile</a>
-                                            <a class="dropdown-item" href="{{ route('logout') }}"
-                                               onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                                <i class="fas fa-sign-out-alt mr-1"></i> Logout
-                                            </a>
-
-                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            <a class="dropdown-item" href="{{route('user.profile')}}">Profile</a>
+                                            <a class="dropdown-item" href="{{route('orders')}}">Orders</a>
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST">
                                                 @csrf
+                                                <button type="submit" class="dropdown-item">Logout</button>
                                             </form>
                                         @endauth
                                         @guest()
-                                            <a class="dropdown-item" href="{{url('/login')}}"><i class="fas fa-sign-in-alt mr-1"></i> Login</a>
-                                            <a class="dropdown-item" href="{{url('/register')}}"><i class="far fa-id-badge mr-2"></i> Signup</a>
+                                            <a class="dropdown-item" href="{{url('/login')}}">Login</a>
+                                            <a class="dropdown-item" href="{{url('/register')}}">Signup</a>
                                         @endguest
 
                                     </div>

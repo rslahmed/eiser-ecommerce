@@ -20,35 +20,36 @@
 
     <div class="container my-5 py-5">
         <div class="row">
-            <div class="col-4">
+            <div class="col-6">
                 <div class="card">
                     <div class="card-header">
-                        Profile
+                        <p class="mb-0">Profile</p>
                     </div>
                     <div class="card-body">
-                        <p>Name: {{$user->name ?? ''}}</p>
-                        <p>Email: {{$user->email ?? ''}}</p>
-                        <a href="{{route('user.password')}}">Change password</a>
+                        <h5>Name :</h5>
+                        <p>{{$user->name}}</p>
+                        <h5>Email :</h5>
+                        <p>{{$user->email}}</p>
+                        <a href="{{route('user.password')}}"><i class="fa fa-edit"></i> Change password</a>
                     </div>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-6">
                 <div class="card">
                     <div class="card-header">
-                        Shipping address
+                        <p class="mb-0">Shipping address</p>
                     </div>
                     <div class="card-body">
-                        <a href="#">+ Add new address</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="card">
-                    <div class="card-header">
-                        Billing address
-                    </div>
-                    <div class="card-body">
-                        <a href="#">+ Add new address</a>
+                        @if(!empty(auth()->user()->shippingAddress))
+                            <h5>Phone Number :</h5>
+                            <p>{{auth()->user()->shippingAddress->number}}</p>
+                            <h5>Address :</h5>
+                            <p>{{auth()->user()->shippingAddress->address}}</p>
+
+                            <a href="{{route('user.password')}}"><i class="fa fa-edit"></i> Edit address</a>
+                        @else
+                            <a href="#"><i class="fa fa-plus"></i> Add shipping address</a>
+                        @endif
                     </div>
                 </div>
             </div>

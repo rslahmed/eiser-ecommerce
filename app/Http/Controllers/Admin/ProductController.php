@@ -49,7 +49,9 @@ class ProductController extends Controller
     function store(){
         //validation
         $data = $this->productValidate();
-        $data['tag_id'] = json_encode(request()->tag_id);
+        if(!empty(request()->tag_id)){
+            $data['tag_id'] = json_encode(request()->tag_id);
+        }
 
         //primary image
         $primaryImage = request()->image_one;
@@ -212,8 +214,8 @@ class ProductController extends Controller
            'brand_id' => 'nullable|string',
            'product_size' => 'nullable|string',
            'product_color' => 'nullable|string',
+           'before_price' => 'nullable|string',
            'selling_price' => 'required|integer',
-           'discount_price' => 'nullable|string',
            'product_details' => 'required|string',
            'tag_id' => 'nullable|array',
            'video_link' => 'nullable|string',

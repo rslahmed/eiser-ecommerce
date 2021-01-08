@@ -65,11 +65,9 @@
                                             <h4>{{$row->product_name}}</h4>
                                         </a>
                                         <div class="mt-3">
-                                            @if(!empty($row->discount_price))
-                                                <span class="mr-4">${{$row->discount_price}}</span>
-                                                <del>${{$row->selling_price}}</del>
-                                            @else
                                                 <span class="mr-4">${{$row->selling_price}}</span>
+                                            @if(!empty($row->before_price))
+                                                <del>${{$row->before_price}}</del>
                                             @endif
                                         </div>
                                     </div>

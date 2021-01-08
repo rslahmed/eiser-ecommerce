@@ -54,7 +54,7 @@ class ShoppingCart extends Component
         $this->carts = Cart::where('user_id', auth()->id())->get();
         $this->subTotal = 0;
         foreach ($this->carts as $cart){
-            $subprice = $cart->product->discount_price ?? $cart->product->selling_price;
+            $subprice = $cart->product->selling_price;
             $price = $subprice * $cart->quantity;
             $this->subTotal += $price;
         }

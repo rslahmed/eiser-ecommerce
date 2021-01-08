@@ -26,7 +26,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <h5>${{$cart->product->discount_price ?? $cart->product->selling_price}}</h5>
+                                    <h5>${{$cart->product->selling_price}}</h5>
                                 </td>
                                 <td>
                                     <div class="product_count">
@@ -38,11 +38,10 @@
                                             <i class="lnr lnr-chevron-down"></i>
                                         </button>
                                     </div>
-
                                 </td>
                                 <td>
                                     <div class="d-flex align-items-center justify-content-between">
-                                        <h5>${{($cart->product->discount_price ?? $cart->product->selling_price) * $cart->quantity }}</h5>
+                                        <h5>${{$cart->product->selling_price * $cart->quantity }}</h5>
                                         <button type="submit" class="btn btn-sm btn-danger d-block" title="Remove this item" wire:click="destroy({{$cart->id}})"><i class="fa fa-trash"></i></button>
                                     </div>
                                 </td>

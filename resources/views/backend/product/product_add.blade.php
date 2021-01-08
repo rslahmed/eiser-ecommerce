@@ -28,14 +28,14 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="selling_price">Selling price: <span class="text-danger">*</span></label>
-                                        <input name="selling_price" type="number" class="form-control" id="selling_price" placeholder="$" value="{{ old('selling_price') ?? $editProduct->selling_price ?? ''}}">
+                                        <label for="before_price">Before price: </label>
+                                        <input name="before_price" type="number" class="form-control" id="before_price" placeholder="250" value="{{ old('before_price') ?? $editProduct->before_price ?? ''}}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="discount_price">Discount price: </label>
-                                        <input name="discount_price" type="number" class="form-control" id="discount_price" placeholder="$" value="{{ old('discount_price') ?? $editProduct->discount_price ?? ''}}">
+                                        <label for="selling_price">Selling price: <span class="text-danger">*</span></label>
+                                        <input name="selling_price" type="number" class="form-control" id="selling_price" placeholder="199" value="{{ old('selling_price') ?? $editProduct->selling_price ?? ''}}">
                                     </div>
                                 </div>
                             </div>
@@ -174,23 +174,20 @@
 
 @section('script')
     <script>
-        $(document).ready(function() {
-            // summernote
-            $('.summernote').summernote('code', `{!! old('product_details') ?? $editProduct->product_details ?? '' !!} `);
-        });
+        // summernote
+        $('.summernote').summernote('code', `{!! old('product_details') ?? $editProduct->product_details ?? '' !!} `);
 
         // bootstrap tag input
         $(document).on('keypress', '.bootstrap-tagsinput input', function(e){
             if (e.keyCode == 13){
                 e.keyCode = 188;
                 e.preventDefault();
-            };
+            }
         });
 
         // get subcategory
         $('#category_id').on('change', function(){
             let id = $(this).val();
-
 
             $.get( "{{url('admin/get_subcategory_bycategory')}}",{id: id}, function( data ) {
                 $('#subcategory_id option:not(".default")').remove();

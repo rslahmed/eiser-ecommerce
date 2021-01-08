@@ -11,8 +11,8 @@
                         <p>Very us move be blessed multiply night</p>
                     </div>
                     <div class="page_link">
-                        <a href="index.html">Home</a>
-                        <a href="checkout.html">Product Checkout</a>
+                        <a href="{{route('home')}}">Home</a>
+                        <a href="#">Product Checkout</a>
                     </div>
                 </div>
             </div>
@@ -37,63 +37,60 @@
                                 <input
                                     type="text"
                                     class="form-control"
-                                    id="first"
                                     name="name"
+                                    id="name"
+                                    placeholder="Full name"
+                                    value="{{auth()->user()->name}}"
+                                    readonly
                                 />
-                                <span
-                                    class="placeholder"
-                                    data-placeholder="Full name"
-                                ></span>
                             </div>
 
                             <div class="col-md-12 form-group p_star">
                                 <input
-                                    type="text"
+                                    type="email"
                                     class="form-control"
-                                    id="number"
-                                    name="number"
-                                />
-                                <span
-                                    class="placeholder"
-                                    data-placeholder="Phone number"
-                                ></span>
-                            </div>
-                            <div class="col-md-12 form-group p_star">
-                                <input
-                                    type="text"
-                                    class="form-control"
+                                    name="email"
                                     id="email"
-                                    name="compemailany"
+                                    placeholder="Email address"
+                                    value="{{auth()->user()->email}}"
+                                    readonly
                                 />
-                                <span
-                                    class="placeholder"
-                                    data-placeholder="Email Address"
-                                ></span>
                             </div>
 
-                            <div class="col-md-12 form-group p_star">
+                            <div class="col-md-12 form-group p_star mb-1">
                                 <input
                                     type="text"
                                     class="form-control"
-                                    id="add1"
-                                    name="add1"
+                                    name="number"
+                                    id="number"
+                                    placeholder="Number"
+                                    @if(!empty(auth()->user()->shippingAddress))
+                                        value="{{auth()->user()->shippingAddress->number}}"
+                                        readonly
+                                    @endif
                                 />
-                                <span
-                                    class="placeholder"
-                                    data-placeholder="Address"
-                                ></span>
                             </div>
 
                             <div class="col-md-12 form-group">
                                 <textarea
                                     class="form-control"
-                                    name="message"
-                                    id="message"
+                                    name="address"
+                                    id="address"
                                     rows="1"
-                                    placeholder="Order Notes"
+                                    placeholder="Address"
+                                    @if(!empty(auth()->user()->shippingAddress))
+                                        value="{{auth()->user()->shippingAddress->address}}"
+                                        readonly
+                                    @endif
                                 ></textarea>
                             </div>
                         </form>
+                        @if(!empty(auth()->user()->shippingAddress))
+                            <div class="mt-1">
+                                <a href="#"> <i class="fa fa-edit"></i> Change shipping address</a>
+                            </div>
+                        @endif
+
                     </div>
                     <div class="col-lg-6">
                         <div class="order_box">
@@ -110,7 +107,7 @@
                                         <a href="#">
                                             <span class="start">{{$cart->product->product_name}}</span>
                                             <span class="middle">x {{$cart->quantity}}</span>
-                                            <span class="last">${{($cart->product->discount_price ?? $cart->product->selling_price) * $cart->quantity }}</span>
+                                            <span class="last">${{$cart->product->selling_price * $cart->quantity }}</span>
                                         </a>
                                     </li>
                                 @endforeach
@@ -133,35 +130,13 @@
                                     </a>
                                 </li>
                             </ul>
-                            <div class="payment_item">
-                                <div class="radion_btn">
-                                    <input type="radio" id="f-option5" name="selector" />
-                                    <label for="f-option5">Cash on delivery</label>
-                                    <div class="check"></div>
-                                </div>
-                                <p>
-                                    Please send a check to Store Name, Store Street, Store Town,
-                                    Store State / County, Store Postcode.
-                                </p>
-                            </div>
-                            <div class="payment_item active">
-                                <div class="radion_btn">
-                                    <input type="radio" id="f-option6" name="selector" />
-                                    <label for="f-option6">Paypal </label>
-                                    <img src="img/product/single-product/card.jpg" alt="" />
-                                    <div class="check"></div>
-                                </div>
-                                <p>
-                                    Please send a check to Store Name, Store Street, Store Town,
-                                    Store State / County, Store Postcode.
-                                </p>
-                            </div>
-                            <div class="creat_account">
+                            <div class="creat_account mt-3">
                                 <input type="checkbox" id="f-option4" name="selector" />
                                 <label for="f-option4">I’ve read and accept the </label>
                                 <a href="#">terms & conditions*</a>
                             </div>
-                            <a class="main_btn" href="#">Proceed to Paypal</a>
+                            <button class="main_btn w-100" id="paymentButton">Proceed to pay</button>
+
                         </div>
                     </div>
                 </div>
@@ -169,4 +144,126 @@
         </div>
     </section>
     <!--================End Checkout Area =================-->
+
+    <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Select a payment method</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{route('order.store')}}" method="post" id="cashForm">
+                        <input type="hidden" name="payment_type" value="cash">
+                        @csrf
+
+                        <button type="submit" class="main_btn w-100" id="cashOn">Cash on delivery</button>
+                    </form>
+                    <div class="mt-3" id="paypal-button">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
+
+@section('script')
+    <script src="https://www.paypal.com/sdk/js?client-id=AR_eAC7YK5Sv6NxynCkrY7aMEwPR9BwoFLMbYYTuVx4iv4vTNzFtuJVDqJjtXJgCnjE80AdriYmtx4ry&currency=USD" data-sdk-integration-source="button-factory"></script>
+    <script>
+        function initPayPalButton() {
+            paypal.Buttons({
+                style: {
+                    shape: 'rect',
+                    color: 'blue',
+                    layout: 'vertical',
+                    label: 'paypal',
+                },
+
+                createOrder: function(data, actions) {
+                    return actions.order.create({
+                        purchase_units: [{
+                            "amount":
+                                {
+                                    "currency_code":"USD",
+                                    "value": {{10}}
+                                }
+                            }]
+                    });
+                },
+
+                onApprove: function(data, actions) {
+                    return actions.order.capture().then(function(details) {
+                        let postData = {
+                            amount:details.purchase_units[0].amount.value,
+                            payer_email: details.payer.email_address,
+                            status:details.status,
+                            payer_id:details.payer.payer_id,
+                            payment_id:details.id,
+                            payer_name: details.payer.name.given_name+" "+details.payer.name.surname,
+                            order_id: 1,
+                            _token:'{{csrf_token()}}'
+                        };
+
+                        console.log(postData);
+                        // payment
+                        $.ajax({
+                            url:'{{ route('payment') }}',
+                            type: 'POST',  // http method
+                            data: postData,  // data to submit
+                            success: function (data, status, xhr) {
+                                alert("Transaction completed by "+ details.payer.name.given_name);
+                            },
+                            error: function (jqXhr, textStatus, errorMessage) {
+                                console.log('Error' + errorMessage);
+                            }
+                        });
+                    });
+                },
+
+                onError: function(err) {
+                    console.log(err);
+                }
+            }).render('#paypal-button');
+        }
+
+
+        let paymentInit = false
+        $('#paymentButton').click(function () {
+            $('#paymentModal').modal('show')
+            if(paymentInit === false){
+                initPayPalButton();
+                paymentInit = true
+            }
+        })
+
+        $('#cashOn').click(function (e) {
+            e.preventDefault()
+            let shipphingAddress = {
+                name: $('#name').val(),
+                email: $('#email').val(),
+                number: $('#number').val(),
+                address: $('#address').val(),
+                _token:'{{csrf_token()}}'
+            };
+
+            // shipping create
+            $.ajax({
+                url:'{{ route('address.store') }}',
+                type: 'POST',  // http method
+                data: shipphingAddress,  // data to submit
+                success: function (data) {
+                   $('#cashForm').submit();
+                },
+                error: function (jqXhr, textStatus, errorMessage) {
+                    console.log('Error' + errorMessage);
+                }
+            });
+
+        })
+
+    </script>
+@endsection
+

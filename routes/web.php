@@ -63,8 +63,16 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/my-carts', [\App\Http\Controllers\CartController::class, 'index'])->name('carts');
     Route::post('/cart/store', [\App\Http\Controllers\CartController::class, 'store'])->name('cart.store');
 
+    //order
+    Route::get('orders', [\App\Http\Controllers\OrderController::class, 'index'])->name('orders');
+    Route::post('order/store', [\App\Http\Controllers\OrderController::class, 'store'])->name('order.store');
+
+    //address
+    Route::post('shipping-address/store', [\App\Http\Controllers\ShippingAddressController::class, 'store'])->name('address.store');
+
     // Checkout
     Route::get('/checkout', [\App\Http\Controllers\CheckoutController::class, 'index'])->name('checkout');
+    Route::post('/make-payment', [\App\Http\Controllers\CheckoutController::class, 'payment'])->name('payment');
 });
 
 

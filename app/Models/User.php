@@ -45,4 +45,9 @@ class User extends Authenticatable
         $cart = Cart::where('user_id', auth()->id())->get()->count();
         return ($cart > 9) ? '9+' : $cart;
     }
+
+    public function shippingAddress()
+    {
+        return $this->hasOne(ShippingAddress::class);
+    }
 }

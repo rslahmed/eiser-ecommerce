@@ -55,12 +55,12 @@
                                 <td>{{$product->product_color ?? 'N/A'}}</td>
                             </tr>
                             <tr>
-                                <th class="w-25">Selling price:</th>
-                                <td>{{$product->selling_price ?? 'N/A'}}</td>
+                                <th class="w-25">Before price:</th>
+                                <td>{{$product->before_price ?? 'N/A'}}</td>
                             </tr>
                             <tr>
-                                <th class="w-25">Discount price:</th>
-                                <td>{{$product->discount_price ?? 'N/A'}}</td>
+                                <th class="w-25">Selling price:</th>
+                                <td>{{$product->selling_price ?? 'N/A'}}</td>
                             </tr>
                             <tr>
                                 <th class="w-25">Product details:</th>
