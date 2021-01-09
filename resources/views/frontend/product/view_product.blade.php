@@ -97,6 +97,7 @@
 @section('script')
     <script !src="">
         $('#addToCart').click(function(){
+            showLoader()
             @auth
             let quantity = parseInt($('#quantity').val());
             $.post("{{route('cart.store')}}",
@@ -106,8 +107,9 @@
                     quantity: 1
                 },
                 function(data, status){
+                    hideLoader()
                     $('#cartCount').text(data)
-                    alert('Product added to your cart')
+                    toastr["success"]("product added to your cart")
                 });
             @else
             return location = '{{route('login')}}'

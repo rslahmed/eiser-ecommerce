@@ -29,6 +29,11 @@
 </head>
 
 <body>
+<div class="preloader">
+    <img src="{{asset('preloader.gif')}}">
+</div>
+
+
 <!--================Header Menu Area =================-->
 <header class="header_area">
     <div class="top_menu">
@@ -306,6 +311,14 @@
             toastr["error"]("{{ Session::get('error') }}")
         @endif
     })
+
+    function showLoader(){
+        $('.preloader').addClass('active')
+    }
+
+    function hideLoader(){
+        $('.preloader').removeClass('active')
+    }
 </script>
 @yield('script')
 </body>

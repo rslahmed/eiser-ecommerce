@@ -72,7 +72,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     // Checkout
     Route::get('/checkout', [\App\Http\Controllers\CheckoutController::class, 'index'])->name('checkout');
-    Route::post('/make-payment', [\App\Http\Controllers\CheckoutController::class, 'payment'])->name('payment');
+    Route::post('/make-payment', [\App\Http\Controllers\PaymentController::class, 'store'])->name('payment');
 });
 
 

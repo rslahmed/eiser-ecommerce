@@ -44,8 +44,6 @@ class OrderController extends Controller
             Cart::where('user_id', $userId)->delete();
         }
 
-        if($request->payment_type == 'cash'){
-            return redirect()->route('orders');
-        }
+        return redirect()->route('orders');
     }
 }

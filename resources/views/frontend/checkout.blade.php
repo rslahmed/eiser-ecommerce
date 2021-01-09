@@ -73,16 +73,15 @@
 
                             <div class="col-md-12 form-group">
                                 <textarea
-                                    class="form-control"
+                                    class="form-control text-left"
                                     name="address"
                                     id="address"
                                     rows="1"
                                     placeholder="Address"
                                     @if(!empty(auth()->user()->shippingAddress))
-                                        value="{{auth()->user()->shippingAddress->address}}"
                                         readonly
                                     @endif
-                                ></textarea>
+                                >@if(!empty(auth()->user()->shippingAddress)){{auth()->user()->shippingAddress->address}}@endif</textarea>
                             </div>
                         </form>
                         @if(!empty(auth()->user()->shippingAddress))
@@ -156,7 +155,8 @@
                 </div>
                 <div class="modal-body">
                     <form action="{{route('order.store')}}" method="post" id="cashForm">
-                        <input type="hidden" name="payment_type" value="cash">
+                        <input type="hidden" name="payment_type" id="payment_type" value="cash">
+                        <input type="hidden" name="payment_id" id="payment_id" value="">
                         @csrf
 
                         <button type="submit" class="main_btn w-100" id="cashOn">Cash on delivery</button>
@@ -183,12 +183,13 @@
                 },
 
                 createOrder: function(data, actions) {
+                    showLoader();
                     return actions.order.create({
                         purchase_units: [{
                             "amount":
                                 {
                                     "currency_code":"USD",
-                                    "value": {{10}}
+                                    "value": {{$subTotal + $shippingCost}}
                                 }
                             }]
                     });
@@ -203,7 +204,6 @@
                             payer_id:details.payer.payer_id,
                             payment_id:details.id,
                             payer_name: details.payer.name.given_name+" "+details.payer.name.surname,
-                            order_id: 1,
                             _token:'{{csrf_token()}}'
                         };
 
@@ -214,7 +214,15 @@
                             type: 'POST',  // http method
                             data: postData,  // data to submit
                             success: function (data, status, xhr) {
-                                alert("Transaction completed by "+ details.payer.name.given_name);
+                                @if(empty(auth()->user()->shippingAddress))
+                                    createShippingAddress()
+                                @endif
+                                console.log(status)
+                                if(status == 'success'){
+                                    $('#payment_type').val('paypal');
+                                    $('#payment_id').val(data);
+                                    $('#cashForm').submit();
+                                }
                             },
                             error: function (jqXhr, textStatus, errorMessage) {
                                 console.log('Error' + errorMessage);
@@ -240,7 +248,14 @@
         })
 
         $('#cashOn').click(function (e) {
-            e.preventDefault()
+            showLoader();
+            @if(empty(auth()->user()->shippingAddress))
+                e.preventDefault()
+                createShippingAddress()
+            @endif
+        })
+
+        function createShippingAddress(){
             let shipphingAddress = {
                 name: $('#name').val(),
                 email: $('#email').val(),
@@ -255,14 +270,13 @@
                 type: 'POST',  // http method
                 data: shipphingAddress,  // data to submit
                 success: function (data) {
-                   $('#cashForm').submit();
+                    $('#cashForm').submit();
                 },
                 error: function (jqXhr, textStatus, errorMessage) {
                     console.log('Error' + errorMessage);
                 }
             });
-
-        })
+        }
 
     </script>
 @endsection
