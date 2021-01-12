@@ -29,10 +29,12 @@
                         <h3>Shipping Details</h3>
                         <form
                             class="row contact_form"
-                            action="#"
+                            action="{{route('address.store')}}"
                             method="post"
                             novalidate="novalidate"
+                            id="shippingAdrForm"
                         >
+                            @csrf
                             <div class="col-md-12 form-group p_star">
                                 <input
                                     type="text"
@@ -83,12 +85,15 @@
                                     @endif
                                 >@if(!empty(auth()->user()->shippingAddress)){{auth()->user()->shippingAddress->address}}@endif</textarea>
                             </div>
-                        </form>
+
                         @if(!empty(auth()->user()->shippingAddress))
-                            <div class="mt-1">
+                            <div class="mt-1 ml-3">
                                 <a href="#"> <i class="fa fa-edit"></i> Change shipping address</a>
                             </div>
+                            @else
+                            <button type="submit" class=" main_btn ml-3">Save</button>
                         @endif
+                        </form>
 
                     </div>
                     <div class="col-lg-6">
@@ -129,13 +134,14 @@
                                     </a>
                                 </li>
                             </ul>
+                            @if(!empty(auth()->user()->shippingAddress))
                             <div class="creat_account mt-3">
                                 <input type="checkbox" id="f-option4" name="selector" />
                                 <label for="f-option4">I’ve read and accept the </label>
                                 <a href="#">terms & conditions*</a>
                             </div>
                             <button class="main_btn w-100" id="paymentButton">Proceed to pay</button>
-
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -214,10 +220,6 @@
                             type: 'POST',  // http method
                             data: postData,  // data to submit
                             success: function (data, status, xhr) {
-                                @if(empty(auth()->user()->shippingAddress))
-                                    createShippingAddress()
-                                @endif
-                                console.log(status)
                                 if(status == 'success'){
                                     $('#payment_type').val('paypal');
                                     $('#payment_id').val(data);
@@ -249,35 +251,10 @@
 
         $('#cashOn').click(function (e) {
             showLoader();
-            @if(empty(auth()->user()->shippingAddress))
-                e.preventDefault()
-                createShippingAddress()
-            @endif
         })
-
-        function createShippingAddress(){
-            let shipphingAddress = {
-                name: $('#name').val(),
-                email: $('#email').val(),
-                number: $('#number').val(),
-                address: $('#address').val(),
-                _token:'{{csrf_token()}}'
-            };
-
-            // shipping create
-            $.ajax({
-                url:'{{ route('address.store') }}',
-                type: 'POST',  // http method
-                data: shipphingAddress,  // data to submit
-                success: function (data) {
-                    $('#cashForm').submit();
-                },
-                error: function (jqXhr, textStatus, errorMessage) {
-                    console.log('Error' + errorMessage);
-                }
-            });
-        }
-
+        $('#shippingAdrForm').on('submit', function () {
+            showLoader();
+        })
     </script>
 @endsection
 

@@ -16,6 +16,7 @@ class ShippingAddressController extends Controller
 
         $data['user_id'] = auth()->user()->id;
         ShippingAddress::create($data);
-        return response()->json('success');
+        return back();
+
     }
 }

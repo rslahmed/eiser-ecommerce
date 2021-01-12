@@ -79,6 +79,7 @@ Route::group(['middleware' => ['auth']], function () {
 //normal user
 //home page
 Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/shop', [\App\Http\Controllers\HomeController::class, 'shop'])->name('shop');
 // subscribe
 Route::post('/subscriber/', [\App\Http\Controllers\Admin\SubscriberController::class, 'store'])->name('subscriber.store');
 // product view

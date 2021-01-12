@@ -49,18 +49,13 @@
                     <div class="float-right">
                         <ul class="right_side">
                             <li>
-                                <a href="cart.html">
+                                <a href="#">
                                     gift card
                                 </a>
                             </li>
                             <li>
-                                <a href="tracking.html">
+                                <a href="#">
                                     track order
-                                </a>
-                            </li>
-                            <li>
-                                <a href="contact.html">
-                                    Contact Us
                                 </a>
                             </li>
                         </ul>
@@ -87,53 +82,17 @@
                     <div class="row w-100 mr-0 align-items-center">
                         <div class="col-lg-7 pr-0">
                             <ul class="nav navbar-nav center_nav pull-right">
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="{{url('/')}}">Home</a>
+                                <li class="nav-item @if(Request::is('/')) active @endif">
+                                    <a class="nav-link" href="{{route('home')}}">Home</a>
                                 </li>
-                                <li class="nav-item submenu dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                                       aria-expanded="false">Shop</a>
-                                    <ul class="dropdown-menu">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="category.html">Shop Category</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="single-product.html">Product Details</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="checkout.html">Product Checkout</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="cart.html">Shopping Cart</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item submenu dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                                       aria-expanded="false">Blog</a>
-                                    <ul class="dropdown-menu">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="blog.html">Blog</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="single-blog.html">Blog Details</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item submenu dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                                       aria-expanded="false">Pages</a>
-                                    <ul class="dropdown-menu">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="tracking.html">Tracking</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="elements.html">Elements</a>
-                                        </li>
-                                    </ul>
+                                <li class="nav-item @if(Request::is('shop')) active @endif">
+                                    <a class="nav-link" href="{{route('shop')}}">Shop</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="contact.html">Contact</a>
+                                    <a class="nav-link" href="#">Contact</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">About</a>
                                 </li>
                             </ul>
                         </div>
@@ -166,6 +125,9 @@
 
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                         @auth()
+                                            @if(auth()->user()->role === 1)
+                                                <a class="dropdown-item" href="{{route('admin.home')}}">Admin</a>
+                                            @endif
                                             <a class="dropdown-item" href="{{route('user.profile')}}">Profile</a>
                                             <a class="dropdown-item" href="{{route('orders')}}">Orders</a>
                                             <form id="logout-form" action="{{ route('logout') }}" method="POST">

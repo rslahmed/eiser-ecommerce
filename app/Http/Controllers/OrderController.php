@@ -17,7 +17,7 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $userId = auth()->user()->id;
-        $prodcuts = Cart::with('product')->where('user_id', $userId)->get();
+        $prodcuts = Cart::where('user_id', $userId)->get();
         $product_detials = [];
         foreach ($prodcuts as $prodcut){
             $data = [];
