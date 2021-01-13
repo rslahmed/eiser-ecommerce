@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\Tags;
 use App\Models\User;
@@ -17,7 +19,9 @@ class HomeController extends Controller
 
     public function shop()
     {
+        $categories = Category::all();
+        $brands = Brand::all();
         $products = Product::orderBy('created_at', 'desc')->take(6)->get();
-        return view('frontend.shop', compact('products'));
+        return view('frontend.shop', compact('products', 'categories', 'brands'));
     }
 }

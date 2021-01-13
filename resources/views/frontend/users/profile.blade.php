@@ -46,9 +46,9 @@
                             <h5>Address :</h5>
                             <p>{{auth()->user()->shippingAddress->address}}</p>
 
-                            <a href="{{route('user.password')}}"><i class="fa fa-edit"></i> Edit address</a>
+                            <a href="{{route('address.create')}}"><i class="fa fa-edit"></i> Edit address</a>
                         @else
-                            <a href="#"><i class="fa fa-plus"></i> Add shipping address</a>
+                            <a href="{{route('address.create')}}"><i class="fa fa-plus"></i> Add shipping address</a>
                         @endif
                     </div>
                 </div>
