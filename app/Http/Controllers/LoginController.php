@@ -8,14 +8,14 @@ use Laravel\Socialite\Facades\Socialite;
 class LoginController extends Controller
 {
 
-    public function google()
+    public function facebook()
     {
-        return Socialite::driver('google')->redirect();
+        return Socialite::driver('facebook')->redirect();
     }
 
-    public function googleRedirect()
+    public function facebookRedirect()
     {
-        $gglUser = Socialite::driver('google')->user();
+        $gglUser = Socialite::driver('facebook')->user();
         $user = User::firstOrCreate([
             'email' => $gglUser->email,
         ], [
