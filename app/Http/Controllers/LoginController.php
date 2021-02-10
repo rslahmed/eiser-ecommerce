@@ -8,18 +8,18 @@ use Laravel\Socialite\Facades\Socialite;
 class LoginController extends Controller
 {
 
-    public function facebook()
+    public function google()
     {
         return Socialite::driver('facebook')->redirect();
     }
 
-    public function facebookRedirect()
+    public function googleRedirect()
     {
-        $fbUser = Socialite::driver('facebook')->user();
+        $gglUser = Socialite::driver('google')->user();
         $user = User::firstOrCreate([
-            'email' => $fbUser->email,
+            'email' => $gglUser->email,
         ], [
-            'name' => $fbUser->name,
+            'name' => $gglUser->name,
             'password' => Hash::make(Str::random(24))
         ]);
 
