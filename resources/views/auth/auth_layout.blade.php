@@ -28,7 +28,7 @@
                         </div>
                         @yield('content')
                         <nav class="login-card-footer-nav">
-                            <a href="{{route('login.facebook')}}" class="btn btn-primary text-white text-uppercase">Login with Google</a>
+                            <a href="{{route('login.google')}}" class="btn btn-primary text-white text-uppercase">Login with Google</a>
                         </nav>
                     </div>
                 </div>
