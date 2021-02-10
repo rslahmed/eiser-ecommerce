@@ -69,10 +69,12 @@
                         </div>
                         <div class="widgets_inner">
                             <ul class="list">
+
                                 @foreach($categories as $row)
-                                    <li>
-                                        <a href="#">{{$row->name}}</a>
-                                    </li>
+                                    <input type="radio" value="{{$row->id}}" hidden name="category" id="cat-{{$row->id}}" wire:model="filterCategory" class="check_inp">
+                                    <label for="cat-{{$row->id}}">
+                                        {{$row->name}}
+                                    </label>
                                 @endforeach
                             </ul>
                         </div>

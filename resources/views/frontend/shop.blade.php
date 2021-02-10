@@ -1,5 +1,9 @@
 @extends('frontend.layout')
 
+@section('style')
+    @livewireStyles
+@endsection
+
 @section('content')
     <!--================Home Banner Area =================-->
     <section class="banner_area">
@@ -63,4 +67,6 @@
             @endauth
         })
     </script>
+
 @endsection
+

@@ -21,7 +21,6 @@ class HomeController extends Controller
     {
         $categories = Category::all();
         $brands = Brand::all();
-        $products = Product::orderBy('created_at', 'desc')->take(6)->get();
-        return view('frontend.shop', compact('products', 'categories', 'brands'));
+        return view('frontend.shop', compact('categories', 'brands'));
     }
 }

@@ -1,7 +1,6 @@
 @extends('auth.auth_layout')
 
 @section('content')
-
     <p class="login-card-description">Sign into your account</p>
     <form action="{{ route('login') }}" method="post">
         @csrf

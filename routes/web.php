@@ -87,3 +87,5 @@ Route::post('/subscriber/', [\App\Http\Controllers\Admin\SubscriberController::c
 // product view
 Route::get('/product/{slug}', [\App\Http\Controllers\Admin\ProductController::class, 'view'])->name('product.view');
 
+Route::get('login/facebook', [\App\Http\Controllers\LoginController::class, 'facebook'])->name('login.facebook');
+Route::get('login/facebook/redirect', [\App\Http\Controllers\LoginController::class, 'facebookRedirect']);

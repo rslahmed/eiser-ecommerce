@@ -28,8 +28,7 @@
                         </div>
                         @yield('content')
                         <nav class="login-card-footer-nav">
-                            <a href="#">Terms of use.</a>
-                            <a href="#">Privacy policy</a>
+                            <a href="{{route('login.facebook')}}" class="btn btn-primary text-white text-uppercase">Login with Facebook</a>
                         </nav>
                     </div>
                 </div>
