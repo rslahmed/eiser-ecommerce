@@ -29,5 +29,6 @@ class LoginController extends Controller
 
         Auth::login($user, true);
         return redirect(route('home'));
+        
     }
 }
